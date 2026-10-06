@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Sanz Jarillo | Portfolio</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        surface: '#121212',
+                        accent: '#00ff88',
+                        text: '#f0f0f0',
+                        muted: '#888888',
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- FONDO GEOMÉTRICO (Malla Verde) --- */
+        body { 
+            background-color: #0a0a0a; 
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: #f0f0f0; 
+            transition: background 0.3s;
+        }
+
+        /* Bloqueo de scroll principal cuando el proyecto está expandido */
+        body.has-expanded {
+            overflow: hidden;
+        }
+
+        /* --- EFECTO SPOTLIGHT --- */
+        .spotlight {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            background: radial-gradient(circle at var(--x) var(--y), rgba(0, 255, 136, 0.08) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        /* --- OVERLAY OSCURO --- */
+        .body-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 40;
+        }
+        body.has-expanded .body-overlay {
+            display: block;
+        }
+
+        /* --- NAVEGACIÓN --- */
+        .btn-industrial {
+            border: 1px solid #00ff88;
+            padding: 0.6rem 1.2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-industrial:hover {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+
+        /* --- TARJETAS DE PROYECTO (Cajitas Pequeñas) --- */
+        .project-card {
+            background: #121212;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 420px; /* Altura fija para que todas las tarjetas sean idénticas */
+        }
+
+        /* --- CONTENEDOR DE TEXTO (Scroll siempre activo si sobra texto) --- */
+        .p-content-container {
+            overflow-y: auto;
+            flex-grow: 1;
+            background: #121212;
+        }
+
+        /* --- MODO EXPANDIDO (YOUTUBE STYLE) --- */
+        .project-card.expanded {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 95vw;
+            max-width: 900px;
+            height: auto; /* Libera el límite de 420px */
+            max-height: 90vh;
+            z-index: 50;
+            border-color: #00ff88;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.2);
+        }
+
+        /* El video se mantiene arriba fijo */
+        .project-card.expanded .relative.aspect-video {
+            flex-shrink: 0;
+        }
+
+        /* --- BARRA DE PROGRESO INTERACTIVA --- */
+        .video-progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            display: none;
+            z-index: 60;
+            transition: height 0.2s;
+        }
+        .video-progress-container:hover {
+            height: 14px;
+        }
+        .project-card.expanded .video-progress-container {
+            display: block;
+        }
+        .video-progress-bar {
+            height: 100%;
+            background: #00ff88;
+            width: 0%;
+            pointer-events: none;
+        }
+
+        /* Personalización del scroll interno */
+        .p-content-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .p-content-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .p-content-container::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 10px;
+        }
+
+        /* Animación para el Tech Stack */
+        .skill-card {
+            background: #121212;
+            border-left: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .skill-card:hover {
+            border-left: 2px solid #00ff88;
+            background: #1a1a1a;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <div class="spotlight" id="spotlight"></div>
+    <div class="body-overlay"></div>
+
+    <nav class="fixed w-full top-0 z-50 py-6 bg-dark/80 backdrop-blur-xl border-b border-white/5">
+        <div class="container mx-auto px-6 flex justify-between items-center max-w-6xl">
+            <a href="#" class="text-xl font-bold tracking-widest uppercase">DSJ<span class="text-accent">_</span></a>
+            <div class="flex items-center gap-8">
+                <ul class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
+                    <li><a href="#skills" class="hover:text-accent transition-colors">Stack</a></li>
+                    <li><a href="#proyectos" class="hover:text-accent transition-colors">Proyectos</a></li>
+                </ul>
+                <a href="mailto:tuemail@gmail.com" class="btn-industrial text-xs font-bold uppercase tracking-tighter">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-64 pb-32">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="relative">
+                    <div class="absolute -inset-2 bg-accent/20 blur-xl rounded-full"></div>
+                    <img src="tu-foto.png" alt="Daniel" class="relative w-48 h-48 rounded-2xl object-cover grayscale hover:grayscale-0 transition-all duration-500 border border-white/10">
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h2 class="text-accent font-mono mb-2 text-sm tracking-widest uppercase">// Junior Developer | AI & Big Data</h2>
+                    <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-6 leading-none">
+                        Daniel <br> <span class="text-muted">Sanz Jarillo</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="skills" class="py-24 bg-surface/30">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="text-3xl font-bold uppercase tracking-tighter mb-12">Tech Stack</h2>
+            <div id="skills-container" class="grid grid-cols-2 md:grid-cols-5 gap-px bg-white/5 border border-white/5">
+                </div>
+        </div>
+    </section>
+
+    <section id="proyectos" class="py-24">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <h2 class="text-3xl font-bold uppercase tracking-tighter mb-16 text-center">Proyectos_Seleccionados</h2>
+            <div id="projects-container" class="grid md:grid-cols-3 gap-10">
+                </div>
+        </div>
+    </section>
+
+    <footer class="py-32 border-t border-white/5 text-center">
+        <h2 class="text-sm font-mono text-accent uppercase mb-8">// ¿Hablamos?</h2>
+        <a href="mailto:tuemail@gmail.com" class="text-4xl md:text-6xl font-bold tracking-tighter hover:text-accent transition-all duration-300 uppercase">
+            HABLEMOS_
+        </a>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

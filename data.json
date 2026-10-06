@@ -1,0 +1,46 @@
+{
+  "skills": [
+    { "name": "Java", "icon": "devicon-java-plain" },
+    { "name": "Spring", "icon": "devicon-spring-plain" },
+    { "name": "Angular", "icon": "devicon-angularjs-plain" },
+    { "name": "Docker", "icon": "devicon-docker-plain" }
+  ],
+  "projects": [
+    {
+      "id": "01",
+      "category": "FULL STACK",
+      "title": "CRM Business Central",
+      "video": "video1.mp4",
+      "github": "",
+      "techs": ["Spring Boot", "Angular", "PostgreSQL"],
+      "description": "Sistema integral de gestión empresarial. Incluye módulos de facturación, control de stock y panel de administración. La arquitectura permite manejar miles de registros sin pérdida de rendimiento. Haz scroll aquí para leer más detalles sobre la implementación de microservicios y seguridad JWT."
+    },
+    {
+      "id": "02",
+      "category": "CLOUD INFRA",
+      "title": "API Rest Dockerized",
+      "video": "video2.mp4",
+      "github": "",
+      "techs": ["Docker", "AWS", "Java"],
+      "description": "Despliegue automatizado en la nube. Se implementó un pipeline de CI/CD para asegurar que cada cambio en el código se despliegue automáticamente en contenedores aislados, garantizando escalabilidad horizontal."
+    },
+    {
+      "id": "03",
+      "category": "GAMEDEV",
+      "title": "Unity Experience",
+      "video": "video3.mp4",
+      "github": "",
+      "techs": ["C#", "Unity", "Blender"],
+      "description": "Entorno interactivo 3D con físicas avanzadas. Optimizado para web mediante WebGL, este proyecto demuestra el uso de shaders personalizados y sistemas de partículas para una experiencia inmersiva."
+    },
+    {
+      "id": "04",
+      "category": "PYTHON",
+      "title": "PyDownloader Demo",
+      "video": "https://www.youtube.com/embed/ktcxsTG2T0w",
+      "github": "https://github.com/ZeroMks/mp4Downloader",
+      "techs": ["Python"],
+      "description": "Aplicación de escritorio con interfaz gráfica desarrollada en Python para la descarga optimizada y asíncrona de vídeo y audio en alta calidad."
+    }
+  ]
+}
